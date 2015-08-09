@@ -3,8 +3,6 @@ var base = require("./base");
 var Model = require("./model");
 var v1 = {
         GET: function(req, res, next) {
-            var query = req.query;
-
             Model.Msl.use(function(dbthen) {
                 Model.Power.find(function(err, doc) {
                     if (err) {
@@ -82,6 +80,4 @@ var v1 = {
 // exportsFn.prototype.v1.POST   = v1.POST;
 // exportsFn.prototype.v1.PUT    = v1.PUT;
 // exportsFn.prototype.v1.DELETE = v1.DELETE;
-var ex = {};
-ex.v1 = v1;
-module.exports = ex;
+exports.v1 = v1;

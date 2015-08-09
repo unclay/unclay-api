@@ -16,15 +16,15 @@ module.exports = function(app) {
     app.post("/api/v1/power", R_power.v1.POST);
 
 
-    // app.get("/api/v1/role", R_role.v1.GET);
+    app.get("/api/v1/role", R_role.v1.GET);
 
-    // app.get("/api/v1/user", R_user.v1.GET);
+    app.get("/api/v1/user", R_user.v1.GET);
 
-    // app.get("/api/v1/dict", R_dict.v1.GET);
+    app.get("/api/v1/dict", R_dict.v1.GET);
 
-    // app.get("/api/v1/note", R_note.v1.GET);
+    app.get("/api/v1/note", R_note.v1.GET);
 
-    // app.get("/api/v1/comment", R_comment.v1.GET);
+    app.get("/api/v1/comment", R_comment.v1.GET);
 
     app.get("/api/v1/test/error", function(req, res, next){
     	var err = new Error();

@@ -4,15 +4,21 @@ var Model = require("./model");re("./model");
 
 var v1 = {
         GET: function(req, res) {
-        	Model.Msl.use(function(){
-        		Model.Comment.find(function(err, doc) {
-	                if (err) {
-	                    return res.send(err);
-	                } else {
-	                    return res.send(Model.format(doc));
-	                }
-	            });
-        	});
+        	Model.Msl.use(function(dbthen) {
+                Model.Comment.find(function(err, doc) {
+                    if (err) {
+                        dbthen(base.err({
+                            "code": 20203,
+                            "from": "power.get.find",
+                            "message": err
+                        }));
+                    } else {
+                        res.send(base.format(doc));
+                    }
+                });
+            }, function(err){
+                next(err);
+            });
         },
         POST: function(req, res) {
             res.send("request is template v1 from POST");

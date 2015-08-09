@@ -5,72 +5,24 @@ var Model = require("./model");
 var v1 = {
         GET: function(req, res) {
             var power, role, user;
-            Model.Msl.use(function() {
-                Model.Power.find(msl.resolve());
-            }).then(function(err, doc) {
-                if (!!err) {
-                    return msl.reject(err);
-                }
-                power = doc;
-                Model.Role.find(msl.resolve());
-            }).then(function(err, doc) {
-                if (!!err) {
-                    return msl.reject(err);
-                }
-                role = doc;
-                Model.User.find(msl.resolve());
-            }).then(function(err, doc) {
-                if (!!err) {
-                    return msl.reject(err);
-                }
-                user = doc;
-                res.send(Model.format({
-                    power: power,
-                    role: role,
-                    user: user
-                }));
-            }).catch(function(err) {
-                res.send(Model.format(err));
+            Model.Msl.use(function(dbthen) {
+                Model.Power.find(function(err, doc) {
+                    if (err) {
+                        dbthen(base.err({
+                            "code": 20203,
+                            "from": "power.get.find",
+                            "message": err
+                        }));
+                    } else {
+                        res.send(base.format(doc));
+                    }
+                });
+            }, function(err){
+                next(err);
             });
         },
         POST: function(req, res) {
-        	var power, role, user;
-            Model.Msl.use(function() {
-                new Model.Power({
-                    "name": "power-get",
-                    "api": ["http://localhost:8012/api/v1/power"]
-                }).save(msl.resolve());
-            }).then(function(err, doc) {
-            	if (!!err) {
-                    return msl.reject(err);
-                }
-                power = doc;
-                new Model.Role({
-                    "name": "role-get",
-                    "api": ["http://localhost:8012/api/v1/role"]
-                }).save(msl.resolve());
-            }).then(function(err, doc) {
-            	if (!!err) {
-                    return msl.reject(err);
-                }
-                role = doc;
-                new Model.User({
-                    "name": "user-get",
-                    "api": ["http://localhost:8012/api/v1/user"]
-                }).save(msl.resolve());
-            }).then(function(err, doc) {
-            	if (!!err) {
-                    return msl.reject(err);
-                }
-                user = doc;
-                res.send(Model.format({
-                    power: power,
-                    role: role,
-                    user: user
-                }));
-            }).catch(function(err) {
-                res.send(Model.format(err));
-            });
+        	
         },
         PUT: function(req, res) {
             res.send("request is template v1 from PUT");
