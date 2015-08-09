@@ -1,12 +1,16 @@
 {
-    "name": "bae-nodejs",
-    "version": "1.0.0",
-    "author": "bae",
-    "description": "The first bae nodejs app!",
-    "scripts": {
-        "start": "node server.js"
-    },
-    "dependencies": {
-    }
+  "name": "unclay-api",
+  "version": "1.0.0",
+  "author": "wangchenglin",
+  "description": "api",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.13.1",
+    "juicer-template": "^1.0.0",
+    "moment": "^2.10.6",
+    "mongoose": "^4.0.3"
+  }
 }
-

@@ -1,0 +1,12 @@
+{
+	"domain": {
+		"SOURCE": "http://localhost:8011"
+	},
+	"db": {
+	    "host": "localhost",
+	    "database": "bae",
+	    "user": "",
+	    "pass": "",
+	    "port": "27017"
+	}
+}
