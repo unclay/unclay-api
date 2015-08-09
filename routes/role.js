@@ -1,4 +1,5 @@
 "use strict";
+var base = require("./base");
 var Model = require("./model");
 
 var v1 = {
@@ -8,7 +9,7 @@ var v1 = {
                     if (err) {
                         dbthen(base.err({
                             "code": 20203,
-                            "from": "power.get.find",
+                            "from": "role.get.find",
                             "message": err
                         }));
                     } else {

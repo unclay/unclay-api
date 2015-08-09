@@ -1,11 +1,11 @@
 var moment = require("moment");
 var R_test = require("./test");
 var R_power = require("./power");
-// var R_role = require("./role");
-// var R_user = require("./user");
-// var R_dict = require("./dict");
-// var R_note = require("./note");
-// var R_comment = require("./comment");
+var R_role = require("./role");
+var R_user = require("./user");
+var R_dict = require("./dict");
+var R_note = require("./note");
+var R_comment = require("./comment");
 module.exports = function(app) {
 	console.log("unix: "+moment().unix());
     app.get("/api/v1/test", R_test.v1.GET);
@@ -51,8 +51,8 @@ module.exports = function(app) {
 	   				}
 	   			});
 	   		}
-   		} else {
-   			next();
+     	} else {
+     		next();
    		}
    	});
 }

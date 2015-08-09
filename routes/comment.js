@@ -1,6 +1,6 @@
 "use strict";
 var base = require("./base");
-var Model = require("./model");re("./model");
+var Model = require("./model");
 
 var v1 = {
         GET: function(req, res) {

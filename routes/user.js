@@ -1,10 +1,14 @@
 "use strict";
-Model
+var base = require("./base");
+var Model = require("./model");
 
 var v1 = {
         GET: function(req, res) {
+            console.log(123);
         	Model.Msl.use(function(dbthen) {
+                console.log(345)
                 Model.User.find(function(err, doc) {
+                    console.log(err, doc)
                     if (err) {
                         dbthen(base.err({
                             "code": 20203,
