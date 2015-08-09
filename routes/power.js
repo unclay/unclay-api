@@ -2,23 +2,23 @@
 var base = require("./base");
 var Model = require("./model");
 var v1 = {
-        GET: function(req, res) {
+        GET: function(req, res, next) {
             var query = req.query;
 
             Model.Msl.use(function(dbthen) {
                 Model.Power.find(function(err, doc) {
                     if (err) {
-                        return res.send(err);
-                    } else {
-                        return res.send(Model.format({
-                            list: doc,
-                            query: req.query,
-                            params: req.params
+                        dbthen(base.err({
+                            "code": 20203,
+                            "from": "power.get.find",
+                            "message": err
                         }));
+                    } else {
+                        res.send(base.format(doc));
                     }
                 });
-            }, function(err, doc){
-
+            }, function(err){
+                next(err);
             });
         },
         POST: function(req, res, next) {
