@@ -3,18 +3,32 @@ var base = require("./base");
 var Model = require("./model");
 var v1 = {
         GET: function(req, res, next) {
+            var query = req.query || {};
+            var page = query.page || 1;
+            var limit = query.limit || 10;
             Model.Msl.use(function(dbthen) {
-                Model.Power.find(function(err, doc) {
-                    if (err) {
-                        dbthen(base.err({
-                            "code": 20203,
-                            "from": "power.get.find",
-                            "message": err
-                        }));
-                    } else {
-                        res.send(base.format(doc));
-                    }
-                });
+                Model.Power
+                    .find()
+                    .select("name api url")
+                    .skip( (page-1)*limit )
+                    .limit(limit)
+                    .sort({
+                        updatetime: "desc"
+                    }).exec(function(err, doc) {
+                        if (err) {
+                            dbthen(base.err({
+                                "code": 20203,
+                                "from": "power.get.find",
+                                "message": err
+                            }));
+                        } else {
+                            res.send(base.format({
+                                "page": page,
+                                "limit": limit,
+                                "list": doc
+                            }));
+                        }
+                    });
             }, function(err){
                 next(err);
             });
@@ -24,7 +38,6 @@ var v1 = {
             var _temp = "";
             _temp = !query.name ? "name参数是必须" :
                 !query.api && !query.url ? "api或是url参数是必须的" : "";
-
             if (!!_temp) {
                 next(base.err({
                     "code": 20100,
@@ -36,6 +49,7 @@ var v1 = {
             _temp = {
                 "name": query.name
             };
+
             if (!!query.api) _temp.api = query.api;
             if (!!query.url) _temp.url = query.url;
             Model.Msl.use(function(dbthen){
@@ -70,6 +84,11 @@ var v1 = {
         },
         DELETE: function(req, res) {
             res.send("request is template v1 from DELETE");
+        },
+        "item": {
+            GET: function(){
+
+            }
         }
     }
 // var exportsFn = function(){
