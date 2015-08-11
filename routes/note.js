@@ -37,6 +37,7 @@ var v1 = {
         POST: function(req, res, next) {
             var query = req.query || {};
             var _temp = "";
+            console.log(query.content);
             _temp = !query.title ? "title参数是必须" :
                 !query.intro ? "intro参数是必须" :
                 !query.content ? "content参数是必须" :
