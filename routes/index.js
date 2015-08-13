@@ -8,7 +8,15 @@ var R_note = require("./note");
 var R_comment = require("./comment");
 var R_error = require("./error");
 module.exports = function(app) {
-	console.log("unix: "+moment().unix());
+    app.all("/api/v1/*", function(req, res, next){
+      if( !!req.headers.origin ){
+        res.header("Access-Control-Allow-Origin", req.headers.origin.indexOf("localhost") >= 0 ? "http://localhost": "http://unclay.com");
+        res.header("Access-Control-Allow-Methods", "*");
+        res.header("Access-Control-Allow-Credentials", true);
+      }
+      next();
+    });
+
     app.get("/api/v1/test", R_test.v1.GET);
     app.post("/api/v1/test", R_test.v1.POST);
 
@@ -45,8 +53,7 @@ module.exports = function(app) {
 
    	app.use(function(err, req, res, next){
    		if( !!err ){
-   			console.log("next-end");
-        console.log( err.from || "from null" );
+        console.log( err );
    			if( err instanceof Error && !!err.content && err.content.code > 0 && !!err.content.message ){
 	   			res.send(err.content);
 	   		} else {

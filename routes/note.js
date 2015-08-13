@@ -10,7 +10,7 @@ var v1 = {
         	Model.Msl.use(function(dbthen) {
                 Model.Note
                     .find()
-                    .select("title intro author content createtime updatetime seo_url")
+                    .select()
                     .skip( (page-1)*limit )
                     .limit(limit)
                     .sort({
@@ -35,8 +35,9 @@ var v1 = {
             });
         },
         POST: function(req, res, next) {
-            var query = req.query || {};
+            var query = Object.prototype.toString.call(req.body) === "[object Object]" ? req.body : req.query;
             var _temp = "";
+            console.log(query, Object.prototype.toString.call(req.body) === "[object Object]" );
             console.log(query.content);
             _temp = !query.title ? "title参数是必须" :
                 !query.intro ? "intro参数是必须" :
