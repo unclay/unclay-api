@@ -10,7 +10,7 @@ var R_error = require("./error");
 module.exports = function(app) {
     app.all("/api/v1/*", function(req, res, next){
       if( !!req.headers.origin ){
-        res.header("Access-Control-Allow-Origin", req.headers.origin.indexOf("localhost") >= 0 ? "http://localhost": "http://unclay.com");
+        res.header("Access-Control-Allow-Origin", req.headers.origin.indexOf("localhost") >= 0 ? "http://localhost": "http://www.unclay.com");
         res.header("Access-Control-Allow-Methods", "*");
         res.header("Access-Control-Allow-Credentials", true);
       }
