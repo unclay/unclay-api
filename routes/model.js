@@ -3,6 +3,7 @@ var msl = require("./link");
 var Schema = mongoose.Schema;
 var moment = require("moment");
 var config = require("../config/config.json");
+var deepPopulate = require("mongoose-deep-populate")(mongoose);
 
 msl.config(config.db);
 
@@ -90,7 +91,6 @@ var User = msl.db.model("User", UserSchema);
 
 // 字典
 var DictSchema = new Schema({
-	"id": Number,
     "pid": {
         "type": Schema.Types.ObjectId,
         "ref": "Dict"
@@ -99,7 +99,14 @@ var DictSchema = new Schema({
     "alias": String,
     "type": String,
     "desc": String,
-    "status": Number,
+    "serial": {
+        "type": Number,
+        default: 0
+    },
+    "status": {
+        "type": Number,
+        default: 0
+    },
     "createtime": {
         "type": Date,
         default: Date.now
@@ -109,6 +116,7 @@ var DictSchema = new Schema({
         default: Date.now
     }
 });
+DictSchema.plugin(deepPopulate);
 var Dict = msl.db.model("Dict", DictSchema);
 
 // 文章

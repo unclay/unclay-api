@@ -78,7 +78,7 @@ var v1 = {
                         return new Model.Note(_temp).save();
                     }
                 }).then(function(doc){
-                    res.send(base.format(doc));
+                    doc && res.send(base.format(doc));
                 }).then(null, function(err){
                     dbthen(base.err({
                         "code": 20200,
@@ -93,8 +93,8 @@ var v1 = {
         PUT: function(req, res, next) {
             var query = base.getQuery(req);
             var _temp = "";
-            _temp = !req.query || !req.query._id ? "参数_id不能为空" :
-                    req.query._id.length !== 24 ? "参数_id有误" : "";
+            _temp = !query || !query._id ? "参数_id不能为空" :
+                    query._id.length !== 24 ? "参数_id有误" : "";
             if( !!_temp ){
                 return next(base.err({
                     "code": 20100,
@@ -124,8 +124,9 @@ var v1 = {
                     "message": "没有需要修改的field"
                 }));
             }
+            _temp.updatetime = Date.now();
             Model.Msl.use(function(dbthen){
-                var p = Model.Note.findByIdAndUpdate(req.query._id, _temp).exec();
+                var p = Model.Note.findByIdAndUpdate(query._id, _temp).exec();
                 p.then(function(doc){
                     if( !doc ){
                         return dbthen(base.err({
@@ -134,7 +135,7 @@ var v1 = {
                             "message": "参数_id有误"
                         }));
                     }
-                    return Model.Note.findById(req.query._id).exec();
+                    return Model.Note.findById(query._id).exec();
                 }).then(function(doc){
                     res.send(base.format(doc));
                 }).then(null, function(err){
