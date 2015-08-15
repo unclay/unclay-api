@@ -1,3 +1,4 @@
+// new Error
 exports.err = function(opt) {
     var err = new Error();
     err.content = {};
@@ -9,6 +10,7 @@ exports.err = function(opt) {
     }
     return err;
 }
+// json格式化输出
 exports.format = function(code, data){
 	if( Object.prototype.toString.call(code) !== "[object Number]" ){
 		data = code;
@@ -18,4 +20,9 @@ exports.format = function(code, data){
 		"code": code,
 		"data": data
 	}
+}
+// 
+exports.getQuery = function(req){
+    return Object.prototype.toString.call(req.body) !== "[object Object]" ? req.query : 
+            JSON.stringify(req.body) !== "{}" ? req.body : req.query;
 }

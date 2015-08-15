@@ -4,7 +4,7 @@ var Model = require("./model");
 
 var v1 = {
         GET: function(req, res, next) {
-            var query = req.query || {};
+            var query = base.getQuery(req);;
             var page = query.page || 1;
             var limit = query.limit || 10;
         	Model.Msl.use(function(dbthen) {
@@ -35,13 +35,12 @@ var v1 = {
             });
         },
         POST: function(req, res, next) {
-            var query = Object.prototype.toString.call(req.body) === "[object Object]" ? req.body : req.query;
+            var query = base.getQuery(req);
             var _temp = "";
             _temp = !query.title ? "title参数是必须" :
                 !query.intro ? "intro参数是必须" :
                 !query.content ? "content参数是必须" :
                 !query.seo_url ? "seo_url参数是必须" : "";
-
             if (!!_temp) {
                 return next(base.err({
                     "code": 20100,
@@ -65,8 +64,20 @@ var v1 = {
             if (!!query.istop) _temp.istop = query.istop;
             if (!!query.user) _temp.user = query.user;
             Model.Msl.use(function(dbthen){
-                var p = new Model.Note(_temp).save();
+                var p = Model.Note.findOne({
+                    "seo_url": query.seo_url
+                }).select("_id").exec();
                 p.then(function(doc){
+                    if( !!doc ){
+                        dbthen(base.err({
+                            "code": 20205,
+                            "from": "note.post.find.exists",
+                            "message": "seo_url: " + query.seo_url + "已存在"
+                        }));
+                    } else {
+                        return new Model.Note(_temp).save();
+                    }
+                }).then(function(doc){
                     res.send(base.format(doc));
                 }).then(null, function(err){
                     dbthen(base.err({
@@ -80,7 +91,7 @@ var v1 = {
             });
         },
         PUT: function(req, res, next) {
-            var query = req.query || {};
+            var query = base.getQuery(req);
             var _temp = "";
             _temp = !req.query || !req.query._id ? "参数_id不能为空" :
                     req.query._id.length !== 24 ? "参数_id有误" : "";
