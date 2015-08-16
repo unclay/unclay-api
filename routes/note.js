@@ -55,7 +55,6 @@ var v1 = {
                 "seo_url": query.seo_url
             };
             if (!!query.thumbnail) _temp.thumbnail = query.thumbnail;
-            if (!!query.category) _temp.category = query.category;
             if (!!query.tag) _temp.tag = query.tag;
             if (!!query.serial) _temp.serial = query.serial;
             if (!!query.seo_title) _temp.seo_title = query.seo_title;
@@ -108,7 +107,6 @@ var v1 = {
             if (!!query.content) _temp.content = query.content;
             if (!!query.seo_url) _temp.seo_url = query.seo_url;
             if (!!query.thumbnail) _temp.thumbnail = query.thumbnail;
-            if (!!query.category) _temp.category = query.category;
             if (!!query.tag) _temp.tag = query.tag;
             if (!!query.serial) _temp.serial = query.serial;
             if (!!query.status) _temp.status = query.status;

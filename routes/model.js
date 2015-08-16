@@ -129,10 +129,6 @@ var NoteSchema = new Schema({
     	"type": Schema.Types.ObjectId,
     	"ref": "User"
     },
-    "category": {
-    	"type": Schema.Types.ObjectId,
-    	"ref": "Dict"
-    },
     "tag": [{
     	"type": Schema.Types.ObjectId,
     	"ref": "Dict"
