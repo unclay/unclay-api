@@ -22,6 +22,7 @@ app.use(jTemplate({
 	domain: config.domain
 }));
 
+app.use("/thumbnail", express.static(__dirname+"/static/img/thumbnail"));
 
 routes(app);
 

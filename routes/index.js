@@ -7,6 +7,7 @@ var R_tag = require("./tag");
 var R_note = require("./note");
 var R_comment = require("./comment");
 var R_error = require("./error");
+var R_file = require("./file");
 module.exports = function(app) {
     app.all("/api/v1/*", function(req, res, next){
       if( !!req.headers.origin ){
@@ -44,6 +45,9 @@ module.exports = function(app) {
       .post(R_tag.v1.POST)
       .put(R_tag.v1.PUT)
       .delete(R_tag.v1.DELETE);
+
+    app.route("/api/v1/file")
+      .post(R_file.v1.POST);
 
     app.get("/api/v1/test/error", function(req, res, next){
     	var err = new Error();
