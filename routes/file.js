@@ -3,11 +3,45 @@ var base = require("./base");
 var Model = require("./model");
 var path = require("path");
 var Upload = require("./upload");
+var fs = require("fs");
 var domain = require("../config/config.json").domain;
 
 var v1 = {
         GET: function(req, res, next) {
-            
+        	var query = base.getQuery(req);
+        	var page = query.page || 1;
+            var limit = query.limit || 10;
+            var _temp = {};
+            if(query.place) _temp.place = query.place;
+            if(query.type) _temp.type = query.type;
+            if( query.size && query.size.gt ){ _temp.size = _temp.size || {}; _temp.size["$gt"] = query.size.gt};
+            if( query.size && query.size.lt ){ _temp.size = _temp.size || {}; _temp.size["$lt"] = query.size.lt};
+        	Model.Msl.use(function(dbthen) {
+                var q = Model.File
+                    .find(_temp)
+                    //.deepPopulate("pid")
+                    .skip((page - 1) * limit)
+                    .limit(limit)
+                    .sort({
+                    	"_id": "desc"
+                    })
+                    .exec();
+                q.then(function(doc) {
+                    res.send(base.format({
+                        "page": page,
+                        "limit": limit,
+                        "list": doc
+                    }));
+                }).then(null, function(err) {
+                    dbthen(base.err({
+                        "code": 20203,
+                        "from": "file.get.find",
+                        "message": err
+                    }));
+                });
+            }, function(err) {
+                next(err);
+            });
         },
         POST: function(req, res, next) {
         	try{

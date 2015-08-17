@@ -23,6 +23,7 @@ app.use(jTemplate({
 }));
 
 app.use("/thumbnail", express.static(__dirname+"/static/img/thumbnail"));
+app.use("/t_thumbnail", express.static(__dirname+"/static/img/t_thumbnail"));
 
 routes(app);
 

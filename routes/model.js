@@ -167,25 +167,35 @@ var Note = msl.db.model("Note", NoteSchema);
 
 // 评论
 var CommentSchema = new Schema({
-	"note": {
-		"type": Schema.Types.ObjectId,
-		"ref": "Note"
-	},
-	"user": {
-		"type": Schema.Types.ObjectId,
-		"ref": "User"
-	},
-	"content": String,
-	"quote": {
-		"type": Schema.Types.ObjectId,
-		"ref": "Comment"
-	},
-	"createtime": {
+    "note": {
+        "type": Schema.Types.ObjectId,
+        "ref": "Note"
+    },
+    "user": {
+        "type": Schema.Types.ObjectId,
+        "ref": "User"
+    },
+    "content": String,
+    "quote": {
+        "type": Schema.Types.ObjectId,
+        "ref": "Comment"
+    },
+    "createtime": {
         "type": Date,
         default: Date.now
     }
 });
 var Comment = msl.db.model("Comment", CommentSchema);
+
+// 评论
+var FileSchema = new Schema({
+    "place": String,
+    "type": String,
+    "upload_name": String,
+    "file_name": String,
+    "size": Number
+});
+var File = msl.db.model("File", FileSchema);
 
 exports.Msl = msl;
 exports.Autoid = Autoid;
@@ -195,3 +205,4 @@ exports.User = User;
 exports.Dict = Dict;
 exports.Note = Note;
 exports.Comment = Comment;
+exports.File = File;

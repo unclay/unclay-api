@@ -47,6 +47,7 @@ module.exports = function(app) {
       .delete(R_tag.v1.DELETE);
 
     app.route("/api/v1/file")
+      .get(R_file.v1.GET)
       .post(R_file.v1.POST);
 
     app.get("/api/v1/test/error", function(req, res, next){
