@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 app.use(session({
 	secret: "bae",
 	resave: false,
+	saveUninitialized: true,
 	cookie: {
 		maxAge: 10000
 	}
