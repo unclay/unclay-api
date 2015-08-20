@@ -11,6 +11,7 @@
     "express": "^4.13.1",
     "express-session": "^1.11.3",
     "formidable": "^1.0.17",
+    "images": "^2.1.6",
     "juicer-template": "^1.0.0",
     "moment": "^2.10.6",
     "mongoose": "^4.0.3",
