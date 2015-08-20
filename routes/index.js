@@ -18,6 +18,8 @@ module.exports = function(app) {
       next();
     });
 
+    app.get("/api/v1/test1", R_test.v1.SETSESSION);
+    app.get("/api/v1/test2", R_test.v1.GETSESSION);
     app.get("/api/v1/test", R_test.v1.GET);
     app.post("/api/v1/test", R_test.v1.POST);
 

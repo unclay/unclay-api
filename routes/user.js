@@ -3,23 +3,28 @@ var base = require("./base");
 var Model = require("./model");
 
 var v1 = {
-        GET: function(req, res) {
-            console.log(123);
-        	Model.Msl.use(function(dbthen) {
-                console.log(345)
-                Model.User.find(function(err, doc) {
-                    console.log(err, doc)
-                    if (err) {
-                        dbthen(base.err({
-                            "code": 20203,
-                            "from": "power.get.find",
-                            "message": err
-                        }));
-                    } else {
+        GET: function(req, res, next) {
+            console.log(2);
+        	var query = base.getQuery(req);
+            console.log(1);
+            Model.Msl.use(function(dbthen) {
+                console.log(2);
+                var q = Model.User
+                    .find()
+                    .exec();
+                    console.log(3);
+                q.then(function(doc) {
+                    if( doc ){
                         res.send(base.format(doc));
-                    }
+                    } 
+                }).then(null, function(err) {
+                    dbthen(base.err({
+                        "code": 20203,
+                        "from": "user.get.find",
+                        "message": err+""
+                    }));
                 });
-            }, function(err){
+            }, function(err) {
                 next(err);
             });
         },

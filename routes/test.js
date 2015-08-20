@@ -4,22 +4,7 @@ var Model = require("./model");
 
 var v1 = {
         GET: function(req, res) {
-            var power, role, user;
-            Model.Msl.use(function(dbthen) {
-                Model.Power.find(function(err, doc) {
-                    if (err) {
-                        dbthen(base.err({
-                            "code": 20203,
-                            "from": "power.get.find",
-                            "message": err
-                        }));
-                    } else {
-                        res.send(base.format(doc));
-                    }
-                });
-            }, function(err){
-                next(err);
-            });
+            
         },
         POST: function(req, res) {
         	
@@ -29,6 +14,17 @@ var v1 = {
         },
         DELETE: function(req, res) {
             res.send("request is template v1 from DELETE");
+        },
+        SETSESSION: function(req, res){
+            req.session.setsession = "i am a session";
+            console.log( req.session );
+            console.log( req.cookie );
+            res.send(req.session.setsession);
+        },
+        GETSESSION: function(req, res){
+            console.log( req.session );
+            console.log( req.cookie );
+            res.send(req.session.setsession);
         }
     }
     // exportsFn.prototype.GET    = v2.GET;

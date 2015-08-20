@@ -4,7 +4,9 @@ var os = require("os");
 var path = require("path");
 var jTemplate = require("juicer-template");
 var bodyParser = require("body-parser");
-
+// var cookieParser = require("cookie-parser");
+// var cookieSession = require("cookie-session");
+var session = require("express-session");
 var config = require("./config/config.json");
 var routes = require("./routes");
 
@@ -16,12 +18,20 @@ var app = express();
 app.set("port", port);
 app.set("views", path.join(__dirname + "/views"));
 app.set("view engine", "html");
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+// app.use(cookieParser());
+app.use(session({
+	secret: "bae",
+	resave: false,
+	cookie: {
+		maxAge: 10000
+	}
+}));
 app.use(jTemplate({
 	cache: false,
 	domain: config.domain
 }));
-
 app.use("/thumbnail", express.static(__dirname+"/static/img/thumbnail"));
 app.use("/t_thumbnail", express.static(__dirname+"/static/img/t_thumbnail"));
 
