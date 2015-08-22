@@ -24,7 +24,7 @@ var v1 = {
         GETSESSION: function(req, res){
             console.log( req.session );
             console.log( req.cookie );
-            res.send(req.session.setsession);
+            res.send(req.session);
         }
     }
     // exportsFn.prototype.GET    = v2.GET;

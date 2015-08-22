@@ -30,3 +30,4 @@ mongoose api: http://mongoosejs.com/docs/api.html
 20205 数据已存在
 20300 文件上传异常
 20301 图片上传异常
+20400 用户不存在或密码错误

@@ -8,6 +8,8 @@ var R_note = require("./note");
 var R_comment = require("./comment");
 var R_error = require("./error");
 var R_file = require("./file");
+var R_base = require("./base");
+var R_redis = require("./redis");
 module.exports = function(app) {
     app.all("/api/v1/*", function(req, res, next){
       if( !!req.headers.origin ){
@@ -32,7 +34,11 @@ module.exports = function(app) {
     app.route("/api/v1/user")
       .get(R_user.v1.GET);
 
+    app.route("/api/v1/login")
+      .post(R_user.v1.login);
 
+    app.route("/api/v1/redis")
+      .get(R_redis);
 
     app.route("/api/v1/note")
       .get(R_note.v1.GET)
