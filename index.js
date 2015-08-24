@@ -8,11 +8,11 @@ var bodyParser = require("body-parser");
 // var cookieSession = require("cookie-session");
 var session = require("express-session");
 var RedisStore = require('connect-redis')(session);
-var redis = require("redis");
+//var redis = require("redis");
 var config = require("./config/config.json");
 var routes = require("./routes");
 
-// var client = redis.createClient(80, 'redis.duapp.com', {"no_ready_check":true});
+// var client = redis.createClient(config.redis.port, config.redis.host, {"no_ready_check":true});
 // client.on("error", function (err) {
 //  	console.log("Error " + err);
 // });
@@ -27,9 +27,8 @@ var routes = require("./routes");
 
 // 建立连接后，在进行集合操作前，需要先进行auth验证
 
-// client.auth(username + '-' + password + '-' + db_name);
-
-var port = os.cpus()[0].model.indexOf("i5-4690") >= 0 ? 8085 : os.type().indexOf("Window") >= 0 ? 8012 : 18080;
+//client.auth(config.redis.pass);
+var port = os.cpus()[0].model.indexOf("i5-4690") >= 0 ? 8085 : (os.type().indexOf("Window")>=0||os.cpus()[0].model.indexOf("M 380") >= 0) ? 8012 : 18080;
 
 var app = express();
 
@@ -39,27 +38,52 @@ app.set("view engine", "html");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 // app.use(cookieParser());
-// app.use(session({
-// 	secret: "wcl",
-// 	resave: true,
-// 	saveUninitialized: true,
-// 	cookie: {
-// 		maxAge: 10000,
-// 		domain:'.yourdomain.com'
-// 	},
-// 	store: new RedisStore({
-// 	    host: "redis.duapp.com",
-// 	    port: 80
-// 	})
-// }));
+app.use(session({
+	secret: "wcl",
+	resave: true,
+	saveUninitialized: true,
+	cookie: {
+		maxAge: 0
+	},
+	store: new RedisStore({
+	    host: config.redis.host,
+	    port: config.redis.port,
+	    pass: config.redis.pass,
+	    prefix: "wcl:",
+	    ttl: 24 * 60 * 60
+	})
+}));
 app.use(jTemplate({
 	cache: false,
 	domain: config.domain
 }));
+
+app.get("/api/v1/test3", function(req, res, next){
+	console.log( req.sessionID );
+	console.log( req.session );
+	res.send(req.session);
+	// try{
+	// new RedisStore({
+	//     host: config.redis.host,
+	//     port: config.redis.port,
+	//     pass: config.redis.pass,
+	//     prefix: "wcl:",
+	//     ttl: 24 * 60 * 60
+	// }).get( req.sessionID, function(err, data){
+	// 	console.log(err, data);
+	// 	if( err ) console.log(err);
+	// 	else res.send(data);
+	// } );
+	// }catch(err){
+	// 	console.log(err);
+	// }
+});
+
 app.use("/thumbnail", express.static(__dirname+"/static/img/thumbnail"));
 app.use("/t_thumbnail", express.static(__dirname+"/static/img/t_thumbnail"));
 
 routes(app);
+
 
 app.listen(app.get("port"), function() {
     console.log("listen to " + app.get("port"));

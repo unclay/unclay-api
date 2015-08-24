@@ -1,12 +1,17 @@
 {
 	"domain": {
-		"SOURCE": "http://source.unclay.com"
+		"SOURCE": "http://source.home.com"
 	},
 	"db": {
-	    "host": "mongo.duapp.com",
-	    "database": "rUJPFTguPXKJLMCCexyy",
-	    "user": "vkGm0Ysdr6zxmn5cv1XrlfLB",
-	    "pass": "xrKVtSrLZeaj3VTx6lh1aQuXYUGFMs8t",
-	    "port": 8908
+	    "host": "192.168.1.107",
+	    "database": "bae",
+	    "user": "",
+	    "pass": "",
+	    "port": "27017"
+	},
+	"redis": {
+	    "host": "192.168.1.114",
+	    "port": "6379",
+	    "pass": "123456"
 	}
 }

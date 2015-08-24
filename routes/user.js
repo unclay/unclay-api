@@ -62,9 +62,15 @@ var v1 = {
                 p.then(function(doc) {
                     if( doc ){
                         req.session.user = doc;
-                        req.session.cookie.maxAge = 43200000;
+                        console.log( req.sessionStore );
+                        req.sessionStore.generate(function(err){
+                            req.sessionStore.reload(function(err){
+                                console.log(err);
+                            })
+                        })
+                        console.log( req.session );
+                        res.send(base.format(req.session));
                         
-                        res.send(base.format(doc));
                     } else {
                         dbthen(base.err({
                             "code": 20400,

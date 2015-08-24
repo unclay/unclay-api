@@ -31,3 +31,17 @@ mongoose api: http://mongoosejs.com/docs/api.html
 20300 文件上传异常
 20301 图片上传异常
 20400 用户不存在或密码错误
+
+### linux shell
+pm2 start index.js -i 0 --name api
+pm2 restart api
+pm2 stop api
+pm2 show api
+tail -f /home/vagrant/.pm2/logs/api-out-0.log -n 50
+tail -f /home/vagrant/.pm2/logs/api-error-0.log
+
+wget http://download.redis.io/releases/redis-3.0.3.tar.gz
+
+netstat -anp | grep 8010
+kill -s 9 pid
+ps -ef | grep pm2

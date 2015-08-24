@@ -24,6 +24,7 @@ var v1 = {
         GETSESSION: function(req, res){
             console.log( req.session );
             console.log( req.cookie );
+            console.log( req.sessionID );
             res.send(req.session);
         }
     }

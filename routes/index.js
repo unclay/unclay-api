@@ -13,7 +13,7 @@ var R_redis = require("./redis");
 module.exports = function(app) {
     app.all("/api/v1/*", function(req, res, next){
       if( !!req.headers.origin ){
-        res.header("Access-Control-Allow-Origin", req.headers.origin.indexOf("localhost") >= 0 ? "http://localhost": "http://www.unclay.com");
+        res.header("Access-Control-Allow-Origin", req.headers.origin.indexOf("localhost") >= 0 ? "http://localhost": req.headers.origin.indexOf("home.com") >= 0 ? "http://www.home.com": "http://www.unclay.com");
         res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
         res.header("Access-Control-Allow-Credentials", true);
       }
