@@ -3,15 +3,15 @@
 		"SOURCE": "http://source.home.com"
 	},
 	"db": {
-	    "host": "192.168.1.107",
-	    "database": "bae",
-	    "user": "",
-	    "pass": "",
-	    "port": "27017"
+	    "host": "mongo.duapp.com",
+	    "database": "rUJPFTguPXKJLMCCexyy",
+	    "user": "vkGm0Ysdr6zxmn5cv1XrlfLB",
+	    "pass": "xrKVtSrLZeaj3VTx6lh1aQuXYUGFMs8t",
+	    "port": "8980"
 	},
 	"redis": {
-	    "host": "192.168.1.114",
-	    "port": "6379",
-	    "pass": "123456"
+	    "host": "redis.duapp.com",
+	    "port": 80,
+	    "pass": "vkGm0Ysdr6zxmn5cv1XrlfLB-xrKVtSrLZeaj3VTx6lh1aQuXYUGFMs8t-XssdPrZESAFIVpOFOzAf"
 	}
 }
