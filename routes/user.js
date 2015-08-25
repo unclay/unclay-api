@@ -39,6 +39,7 @@ var v1 = {
             res.send("request is template v1 from DELETE");
         },
         login: function(req, res, next){
+            console.log(1);
             var query = base.getQuery(req);
             var _temp = "";
             _temp = !query.name ? "name参数是必须" :
@@ -55,20 +56,18 @@ var v1 = {
                 "pass": crypto.createHash('md5').update( query.pass ).digest('base64')
             };
             Model.Msl.use(function(dbthen) {
+                console.log(2, _temp)
+                try{
                 var p = Model.User
                     .findOne(_temp)
                     .select("email name showname role power")
                     .exec();
+
+                console.log(3)
                 p.then(function(doc) {
+                    console.log(4, doc)
                     if( doc ){
-                        req.session.user = doc;
-                        console.log( req.sessionStore );
-                        req.sessionStore.generate(function(err){
-                            req.sessionStore.reload(function(err){
-                                console.log(err);
-                            })
-                        })
-                        console.log( req.session );
+                        console.log(req.session);
                         res.send(base.format(req.session));
                         
                     } else {
@@ -79,13 +78,18 @@ var v1 = {
                         }));
                     }
                 }).then(null, function(err) {
+                    console.log(5, err)
                     dbthen(base.err({
                         "code": 20203,
                         "from": "user.login.find",
                         "message": err+""
                     }));
                 });
+                } catch(err) {
+                    console.log(7, err);
+                }
             }, function(err) {
+                console.log(6, err)
                 next(err);
             });
         },

@@ -4,7 +4,7 @@ var os = require("os");
 var path = require("path");
 var jTemplate = require("juicer-template");
 var bodyParser = require("body-parser");
-// var cookieParser = require("cookie-parser");
+var cookieParser = require("cookie-parser");
 // var cookieSession = require("cookie-session");
 var session = require("express-session");
 var RedisStore = require('connect-redis')(session);
@@ -37,7 +37,7 @@ app.set("views", path.join(__dirname + "/views"));
 app.set("view engine", "html");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use(session({
 	secret: "wcl",
 	resave: true,

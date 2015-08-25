@@ -35,7 +35,8 @@ module.exports = function(app) {
       .get(R_user.v1.GET);
 
     app.route("/api/v1/login")
-      .post(R_user.v1.login);
+      .post(R_user.v1.login)
+      .get(R_user.v1.login);
 
     app.route("/api/v1/redis")
       .get(R_redis);
