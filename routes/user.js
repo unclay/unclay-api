@@ -5,15 +5,14 @@ var crypto = require("crypto");
 
 var v1 = {
         GET: function(req, res, next) {
-            console.log(2);
         	var query = base.getQuery(req);
-            console.log(1);
             Model.Msl.use(function(dbthen) {
-                console.log(2);
+                // Model.User.find(function(err, doc){
+                //     console.log(err, doc);
+                // });
                 var q = Model.User
                     .find()
                     .exec();
-                    console.log(3);
                 q.then(function(doc) {
                     if( doc ){
                         res.send(base.format(doc));
@@ -39,7 +38,6 @@ var v1 = {
             res.send("request is template v1 from DELETE");
         },
         login: function(req, res, next){
-            console.log(1);
             var query = base.getQuery(req);
             var _temp = "";
             _temp = !query.name ? "name参数是必须" :
@@ -56,19 +54,20 @@ var v1 = {
                 "pass": crypto.createHash('md5').update( query.pass ).digest('base64')
             };
             Model.Msl.use(function(dbthen) {
-                console.log(2, _temp)
-                try{
                 var p = Model.User
                     .findOne(_temp)
                     .select("email name showname role power")
                     .exec();
 
-                console.log(3)
                 p.then(function(doc) {
-                    console.log(4, doc)
                     if( doc ){
-                        console.log(req.session);
-                        res.send(base.format(req.session));
+                        req.session.user = doc;
+                        return Model.Session.update({
+                            __clid: req.session.id
+                        }, {
+                            value: req.session
+                        }).exec();
+                        
                         
                     } else {
                         dbthen(base.err({
@@ -77,19 +76,20 @@ var v1 = {
                             "message": "用户不存在或密码错误"
                         }));
                     }
+                }).then(function(data){
+                    if( !!data && data.ok == 1 ){
+                        res.send(base.format(req.session.user));
+                    } else {
+                        res.send(base.format("登陆失败"));
+                    }
                 }).then(null, function(err) {
-                    console.log(5, err)
                     dbthen(base.err({
                         "code": 20203,
                         "from": "user.login.find",
                         "message": err+""
                     }));
                 });
-                } catch(err) {
-                    console.log(7, err);
-                }
             }, function(err) {
-                console.log(6, err)
                 next(err);
             });
         },

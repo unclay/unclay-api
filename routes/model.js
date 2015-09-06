@@ -197,6 +197,13 @@ var FileSchema = new Schema({
 });
 var File = msl.db.model("File", FileSchema);
 
+// 评论
+var sessionSchema = new Schema({
+    "__clid": String,
+    "value": Object
+});
+var Session = msl.db.model("Session", sessionSchema);
+
 exports.Msl = msl;
 exports.Autoid = Autoid;
 exports.Power = Power;
@@ -206,3 +213,4 @@ exports.Dict = Dict;
 exports.Note = Note;
 exports.Comment = Comment;
 exports.File = File;
+exports.Session = Session;

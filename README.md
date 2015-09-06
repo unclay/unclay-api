@@ -45,3 +45,5 @@ wget http://download.redis.io/releases/redis-3.0.3.tar.gz
 netstat -anp | grep 8010
 kill -s 9 pid
 ps -ef | grep pm2
+
+/etc/init.d/php5-fpm restart
