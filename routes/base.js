@@ -1,3 +1,7 @@
+"use strict";
+var base = require("./base");
+var Model = require("./model");
+
 // new Error
 exports.err = function(opt) {
     var err = new Error();
@@ -25,4 +29,8 @@ exports.format = function(code, data){
 exports.getQuery = function(req){
     return Object.prototype.toString.call(req.body) !== "[object Object]" ? req.query : 
             JSON.stringify(req.body) !== "{}" ? req.body : req.query;
+}
+
+exports.updateTotal = function(){
+
 }

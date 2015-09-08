@@ -46,6 +46,9 @@ module.exports = function(app) {
       .post(R_note.v1.POST)
       .put(R_note.v1.PUT);
 
+    app.route("/api/v1/total/note")
+      .get(R_note.v1.Total);
+
     app.route("/api/v1/note/:note_id")
       .get(R_note.v1.item.GET);
 

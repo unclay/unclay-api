@@ -178,6 +178,100 @@ var v1 = {
                     next(err);
                 });
             }
+        },
+        "Total": function(req, res, next){
+            Model.Msl.use(function(dbthen) {
+                var note = {};
+                var p = Model.Note
+                    .find()
+                    .select("tag")
+                    // .deepPopulate("tag", {
+                    //     "populate": {
+                    //         "tag": {
+                    //             select: "type"
+                    //         }
+                    //     }
+                    // })
+                    .exec();
+                p.then(function(data){
+                    for( var i=0; i<data.length; i++ ){
+                        for( var j=0; j<data[i].tag.length; j++ ){
+                            note[data[i].tag[j]] = note[data[i].tag[j]] || [];
+                            note[data[i].tag[j]].push(data[i]._id);
+                        }
+                    }
+                    return Model.Dict
+                        .find({
+                            type: "tag",
+                            status: 0
+                        })
+                        //.select("_id")
+                        .exec();
+                    
+                }).then(function(tag){
+                    var doc = [];
+                    var _temp = {};
+                    console.log(tag);
+                    for(var i=0; i<tag.length; i++){
+                        _temp = {
+                            pid: tag[i]._id,
+                            type: "tag",
+                            count: 0
+                        }
+                        if( note[tag[i]._id] && note[tag[i]._id].length > 0 ){
+                            _temp.total = note[tag[i]._id];
+                            _temp.count = note[tag[i]._id].length;
+                        }
+                        doc.push(_temp);
+                    }
+                    _temp = 0;
+                    note = null;
+                    var _save = function(){
+                        Model.Total.findOne({
+                            pid: doc[_temp].pid
+                        }, function(err, result){
+                            if( !!result ){
+                                console.log( err, result );
+                                for( var i in doc[_temp] ){
+                                    result[i] = doc[_temp][i];
+                                }
+                                result.save(function(){
+                                    _temp++;
+                                    if( _temp < doc.length ){
+                                        _save();
+                                    }
+                                });
+                            } else {
+                                new Model.Total(doc[_temp]).save(function(){
+                                    _temp++;
+                                    if( _temp < doc.length ){
+                                        _save();
+                                    }
+                                });
+                            }
+                           // console.log(a,b,c,d);
+                            
+                        })
+                        // new Model.Total(doc[_temp]).save(function(result, err){
+                        //     _temp++;
+                        //     if( _temp < doc.length ){
+                        //         _save();
+                        //     }
+                        // });
+                    }
+                    _save();
+                    res.send(base.format(doc));
+                }).then(null, function(err){
+                    dbthen(base.err({
+                        "code": 20203,
+                        "from": "note.total.get.find",
+                        "message": err+""
+                    }));
+                });
+            }, function(err){
+                next(err);
+            });
+
         }
     }
     // exportsFn.prototype.GET    = v2.GET;

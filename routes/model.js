@@ -87,6 +87,7 @@ var UserSchema = new Schema({
         default: Date.now
     }
 });
+UserSchema.plugin(deepPopulate);
 var User = msl.db.model("User", UserSchema);
 
 // 字典
@@ -126,33 +127,33 @@ var NoteSchema = new Schema({
     "thumbnail": String,
     "content": String,
     "author": {
-    	"type": Schema.Types.ObjectId,
-    	"ref": "User"
+        "type": Schema.Types.ObjectId,
+        "ref": "User"
     },
     "tag": [{
-    	"type": Schema.Types.ObjectId,
-    	"ref": "Dict"
+        "type": Schema.Types.ObjectId,
+        "ref": "Dict"
     }],
     "seo_title": String,
     "sero_keywords": String,
     "seo_description": String,
     "seo_url": String,
     "status": {
-    	"type": Number,
-    	default: 0
+        "type": Number,
+        default: 0
     },
     "views": Number,
     "user": [{
-    	"type": Schema.Types.ObjectId,
-    	"ref": "User"
+        "type": Schema.Types.ObjectId,
+        "ref": "User"
     }],
     "serial": {
-    	"type": Number,
-    	default: 0
+        "type": Number,
+        default: 0
     },
     "istop": {
-    	"type": Number,
-    	default: 0
+        "type": Number,
+        default: 0
     },
     "createtime": {
         "type": Date,
@@ -163,7 +164,23 @@ var NoteSchema = new Schema({
         default: Date.now
     }
 });
+NoteSchema.plugin(deepPopulate);
 var Note = msl.db.model("Note", NoteSchema);
+
+// 统计查询
+var TotalSchema = new Schema({
+    "type": String,
+    "pid": {
+        "type": Schema.Types.ObjectId,
+        "ref": "Note"
+    },
+    "count": Number,
+    "note": {
+        "type": Schema.Types.ObjectId,
+        "ref": "Note"
+    }
+});
+var Total = msl.db.model("Total", TotalSchema);
 
 // 评论
 var CommentSchema = new Schema({
@@ -214,3 +231,4 @@ exports.Note = Note;
 exports.Comment = Comment;
 exports.File = File;
 exports.Session = Session;
+exports.Total = Total;
