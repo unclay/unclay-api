@@ -170,9 +170,9 @@ var Note = msl.db.model("Note", NoteSchema);
 // 统计查询
 var TotalSchema = new Schema({
     "type": String,
-    "pid": {
+    "tagid": {
         "type": Schema.Types.ObjectId,
-        "ref": "Note"
+        "ref": "Dict"
     },
     "count": Number,
     "note": {
@@ -180,6 +180,7 @@ var TotalSchema = new Schema({
         "ref": "Note"
     }
 });
+TotalSchema.plugin(deepPopulate);
 var Total = msl.db.model("Total", TotalSchema);
 
 // 评论

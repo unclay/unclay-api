@@ -214,7 +214,7 @@ var v1 = {
                     console.log(tag);
                     for(var i=0; i<tag.length; i++){
                         _temp = {
-                            pid: tag[i]._id,
+                            tagid: tag[i]._id,
                             type: "tag",
                             count: 0
                         }
@@ -228,7 +228,7 @@ var v1 = {
                     note = null;
                     var _save = function(){
                         Model.Total.findOne({
-                            pid: doc[_temp].pid
+                            tagid: doc[_temp].tagid
                         }, function(err, result){
                             if( !!result ){
                                 console.log( err, result );
