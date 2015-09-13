@@ -61,6 +61,7 @@ var v1 = {
 
                 p.then(function(doc) {
                     if( doc ){
+                        console.log(req.session);
                         req.session.user = doc;
                         return Model.Session.update({
                             __clid: req.session.id

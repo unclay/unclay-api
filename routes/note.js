@@ -211,17 +211,18 @@ var v1 = {
                 }).then(function(tag){
                     var doc = [];
                     var _temp = {};
-                    console.log(tag);
                     for(var i=0; i<tag.length; i++){
                         _temp = {
                             tagid: tag[i]._id,
+                            name: tag[i].name,
                             type: "tag",
                             count: 0
                         }
                         if( note[tag[i]._id] && note[tag[i]._id].length > 0 ){
-                            _temp.total = note[tag[i]._id];
+                            _temp.note = note[tag[i]._id];
                             _temp.count = note[tag[i]._id].length;
                         }
+                        console.log( _temp );
                         doc.push(_temp);
                     }
                     _temp = 0;
@@ -230,8 +231,8 @@ var v1 = {
                         Model.Total.findOne({
                             tagid: doc[_temp].tagid
                         }, function(err, result){
+                            console.log( doc[_temp] );
                             if( !!result ){
-                                console.log( err, result );
                                 for( var i in doc[_temp] ){
                                     result[i] = doc[_temp][i];
                                 }

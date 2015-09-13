@@ -35,7 +35,7 @@ var generate = function(req, res, next, sessionid){
             	return new Model.Session({
             		__clid: session.id,
             		value: session
-            	}).save(function(doc, err){
+            	}).save(function(err, doc){
 					if (doc) {
 		                sessions[session.id] = session;
 		            	setEnd(req, res, next, session);
@@ -57,7 +57,6 @@ module.exports = function(opt){
 		EXPIRES = opt.expires || EXPIRES;
 	}
 	return function(req, res, next){
-
 		var id = req.cookies[key];
 		if(!id){
 			generate(req, res, next);

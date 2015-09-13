@@ -174,11 +174,12 @@ var TotalSchema = new Schema({
         "type": Schema.Types.ObjectId,
         "ref": "Dict"
     },
+    "name": String,
     "count": Number,
-    "note": {
+    "note": [{
         "type": Schema.Types.ObjectId,
         "ref": "Note"
-    }
+    }]
 });
 TotalSchema.plugin(deepPopulate);
 var Total = msl.db.model("Total", TotalSchema);
