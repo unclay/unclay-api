@@ -1,5 +1,4 @@
 .gitignore
 node_modules
-/config/config.json
 /static/img/*/*
 !/static/img/*/cache
