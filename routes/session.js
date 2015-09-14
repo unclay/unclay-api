@@ -20,7 +20,9 @@ var generate = function(req, res, next, sessionid){
 	session.cookie = {
 		expire: new Date().getTime() + EXPIRES
 	};
+	console.log("session8");
 	Model.Msl.use(function(dbthen) {
+		console.log("session9");
 		var p = Model.Session.findOne({
 			__clid: session.id
 		}).exec();
@@ -57,20 +59,27 @@ module.exports = function(opt){
 		EXPIRES = opt.expires || EXPIRES;
 	}
 	return function(req, res, next){
+		console.log("session1");
 		var id = req.cookies[key];
 		if(!id){
+			console.log("session2");
 			generate(req, res, next);
 		} else {
+			console.log("session3");
 			var session = sessions[id];
 			if( session ){
+				console.log("session4");
 				if( session.cookie.expire > new Date().getTime() ){
+					console.log("session6");
 					session.cookie.expire = new Date().getTime() + EXPIRES;
 					setEnd(req, res, next, session);
 				} else {
+					console.log("session5");
 					delete sessions[id];
 					generate(req, res, next);
 				}
 			} else {
+				console.log("session7");
 				generate(req, res, next, id);
 			}
 		}
