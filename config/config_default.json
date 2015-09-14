@@ -1,0 +1,16 @@
+{
+	"domain": {
+		"SOURCE": "http://localhost:8011"
+	},
+	"db": {
+	    "host": "localhost",
+	    "database": "bae",
+	    "user": "",
+	    "pass": "",
+	    "port": "27017"
+	},
+	"redis": {
+	    "host": "192.168.1.114",
+	    "port": "6379"
+	}
+}

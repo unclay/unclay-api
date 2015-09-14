@@ -1,0 +1,16 @@
+alias:
+- aliasDomain: api.unclay.com
+  cdatetime: '1439092020'
+appid: appidrcpbdt0a7o
+appname: unclay_api
+cdatetime: '1439086252'
+createtype: web
+domain: unclayapi.duapp.com
+inum: '1'
+langType: nodejs
+name: unclay_api
+releaseRevision: bfcff57fdc19ebd739083665e1ba3c65026dbdb9
+reposUrl: https://git.duapp.com/appidrcpbdt0a7o
+solution: nodejs-web
+status: '4'
+versionType: git
