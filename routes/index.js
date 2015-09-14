@@ -9,7 +9,7 @@ var R_comment = require("./comment");
 var R_error = require("./error");
 var R_file = require("./file");
 var R_base = require("./base");
-var R_redis = require("./redis");
+// var R_redis = require("./redis");
 module.exports = function(app) {
     app.all("/api/v1/*", function(req, res, next){
       if( !!req.headers.origin ){
@@ -38,8 +38,8 @@ module.exports = function(app) {
       .post(R_user.v1.login)
       .get(R_user.v1.login);
 
-    app.route("/api/v1/redis")
-      .get(R_redis);
+    // app.route("/api/v1/redis")
+    //   .get(R_redis);
 
     app.route("/api/v1/note")
       .get(R_note.v1.GET)
