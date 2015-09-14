@@ -1,32 +1,14 @@
 {
 	"domain": {
-<<<<<<< HEAD
 		"SOURCE": "http://source.unclay.com",
 		"NOTE": "http://note.unclay.com",
 		"API": "http://api.unclay.com"
-=======
-		"SOURCE": "http://source.home.com"
->>>>>>> origin/master
 	},
 	"db": {
 	    "host": "mongo.duapp.com",
 	    "database": "rUJPFTguPXKJLMCCexyy",
 	    "user": "vkGm0Ysdr6zxmn5cv1XrlfLB",
 	    "pass": "xrKVtSrLZeaj3VTx6lh1aQuXYUGFMs8t",
-<<<<<<< HEAD
-	    "port": "8909"
-	},
-	"application": {
-		"note": {
-			"limit": 42
-		}
-=======
-	    "port": "8980"
-	},
-	"redis": {
-	    "host": "redis.duapp.com",
-	    "port": 80,
-	    "pass": "vkGm0Ysdr6zxmn5cv1XrlfLB-xrKVtSrLZeaj3VTx6lh1aQuXYUGFMs8t-XssdPrZESAFIVpOFOzAf"
->>>>>>> origin/master
+	    "port": "8908"
 	}
 }
