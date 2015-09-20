@@ -35,12 +35,12 @@ var PowerSchema = new Schema({
     "url": [String],
     "api": [String],
     "createtime": {
-        "type": Date,
-        default: Date.now
+        "type": Number,
+        default: parseInt(new Date().getTime()/1000, 10)
     },
     "updatetime": {
-        "type": Date,
-        default: Date.now
+        "type": Number,
+        default: parseInt(new Date().getTime()/1000, 10)
     }
 });
 var Power = msl.db.model("Power", PowerSchema);
@@ -53,12 +53,12 @@ var RoleSchema = new Schema({
         "ref": Power
     }],
     "createtime": {
-        "type": Date,
-        default: Date.now
+        "type": Number,
+        default: parseInt(new Date().getTime()/1000, 10)
     },
     "updatetime": {
-        "type": Date,
-        default: Date.now
+        "type": Number,
+        default: parseInt(new Date().getTime()/1000, 10)
     }
 });
 var Role = msl.db.model("Role", RoleSchema);
@@ -79,12 +79,12 @@ var UserSchema = new Schema({
         "ref": "Power"
     },
     "createtime": {
-        "type": Date,
-        default: Date.now
+        "type": Number,
+        default: parseInt(new Date().getTime()/1000, 10)
     },
     "updatetime": {
-        "type": Date,
-        default: Date.now
+        "type": Number,
+        default: parseInt(new Date().getTime()/1000, 10)
     }
 });
 UserSchema.plugin(deepPopulate);
@@ -109,12 +109,12 @@ var DictSchema = new Schema({
         default: 0
     },
     "createtime": {
-        "type": Date,
-        default: Date.now
+        "type": Number,
+        default: parseInt(new Date().getTime()/1000, 10)
     },
     "updatetime": {
-        "type": Date,
-        default: Date.now
+        "type": Number,
+        default: parseInt(new Date().getTime()/1000, 10)
     }
 });
 DictSchema.plugin(deepPopulate);
@@ -156,12 +156,12 @@ var NoteSchema = new Schema({
         default: 0
     },
     "createtime": {
-        "type": Date,
-        default: Date.now
+        "type": Number,
+        default: parseInt(new Date().getTime()/1000, 10)
     },
     "updatetime": {
-        "type": Date,
-        default: Date.now
+        "type": Number,
+        default: parseInt(new Date().getTime()/1000, 10)
     }
 });
 NoteSchema.plugin(deepPopulate);
@@ -200,8 +200,8 @@ var CommentSchema = new Schema({
         "ref": "Comment"
     },
     "createtime": {
-        "type": Date,
-        default: Date.now
+        "type": Number,
+        default: parseInt(new Date().getTime()/1000, 10)
     }
 });
 var Comment = msl.db.model("Comment", CommentSchema);
