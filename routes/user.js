@@ -63,11 +63,17 @@ var v1 = {
                     if( doc ){
                         console.log(req.session);
                         req.session.user = doc;
-                        return Model.Session.update({
-                            __clid: req.session.id
-                        }, {
+                        req.session.cookie = {
+                            expires: new Date().getTime() + req.EXPIRES
+                        };
+                        return new Model.Session({
                             value: req.session
-                        }).exec();
+                        }).save();
+                        // return Model.Session.update({
+                        //     __clid: req.session.id
+                        // }, {
+                        //     value: req.session
+                        // }).exec();
                         
                         
                     } else {
@@ -77,12 +83,20 @@ var v1 = {
                             "message": "用户不存在或密码错误"
                         }));
                     }
-                }).then(function(data){
-                    if( !!data && data.ok == 1 ){
-                        res.send(base.format(req.session.user));
+                }).then(function(doc){
+                    if( !!doc ){
+                        var host = req.headers.host.split(".");
+                        host = "."+host[host.length-2]+"."+host[host.length-1];
+                        res.setHeader('Set-Cookie', req.KEY+'='+doc._id+';domain='+host+';path=/;Expires='+new Date(doc.value.cookie.expires).toGMTString()+';httpOnly=true');
+                        res.send(base.format(doc.value.user));
                     } else {
                         res.send(base.format("登陆失败"));
                     }
+                    // if( !!data && data.ok == 1 ){
+                    //     res.send(base.format(req.session.user));
+                    // } else {
+                    //     res.send(base.format("登陆失败"));
+                    // }
                 }).then(null, function(err) {
                     dbthen(base.err({
                         "code": 20203,
