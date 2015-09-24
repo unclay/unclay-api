@@ -53,8 +53,10 @@ var v1 = {
                 "title": query.title,
                 "intro": query.intro,
                 "content": query.content,
-                "seo_url": query.seo_url
+                "seo_url": query.seo_url,
+                "user": [req.session.user._id]
             };
+
             if (!!query.thumbnail) _temp.thumbnail = query.thumbnail;
             if (!!query.tag) _temp.tag = query.tag;
             if (!!query.serial) _temp.serial = query.serial;
@@ -78,12 +80,13 @@ var v1 = {
                         return new Model.Note(_temp).save();
                     }
                 }).then(function(doc){
+                    v1.Total();
                     doc && res.send(base.format(doc));
                 }).then(null, function(err){
                     dbthen(base.err({
                         "code": 20200,
                         "from": "note.post.find|save",
-                        "message": err
+                        "message": err+""
                     }));
                 });
             }, function(err){
@@ -115,7 +118,6 @@ var v1 = {
             if (!!query.seo_keywords) _temp.seo_keywords = query.seo_keywords;
             if (!!query.seo_description) _temp.seo_description = query.seo_description;
             if (!!query.istop) _temp.istop = query.istop;
-            if (!!query.user) _temp.user = query.user;
             if ( JSON.stringify(_temp) === "{}" ) {
                 return next(base.err({
                     "code": 20100,
@@ -136,12 +138,13 @@ var v1 = {
                     }
                     return Model.Note.findById(query._id).exec();
                 }).then(function(doc){
+                    v1.Total();
                     res.send(base.format(doc));
                 }).then(null, function(err){
                     dbthen(base.err({
                         "code": 20200,
                         "from": "note.put.findByIdAndUpdate|findById",
-                        "message": err
+                        "message": err+""
                     }));
                 });
             }, function(err){
@@ -223,7 +226,6 @@ var v1 = {
                             _temp.note = note[tag[i]._id];
                             _temp.count = note[tag[i]._id].length;
                         }
-                        console.log( _temp );
                         doc.push(_temp);
                     }
                     _temp = 0;
@@ -232,7 +234,6 @@ var v1 = {
                         Model.Total.findOne({
                             tagid: doc[_temp].tagid
                         }, function(err, result){
-                            console.log( doc[_temp] );
                             if( !!result ){
                                 for( var i in doc[_temp] ){
                                     result[i] = doc[_temp][i];
@@ -262,7 +263,7 @@ var v1 = {
                         // });
                     }
                     _save();
-                    res.send(base.format(doc));
+                    res && res.send(base.format(doc));
                 }).then(null, function(err){
                     dbthen(base.err({
                         "code": 20203,
@@ -271,7 +272,7 @@ var v1 = {
                     }));
                 });
             }, function(err){
-                next(err);
+                next && next(err);
             });
 
         }

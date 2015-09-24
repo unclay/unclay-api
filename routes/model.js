@@ -135,7 +135,7 @@ var NoteSchema = new Schema({
         "ref": "Dict"
     }],
     "seo_title": String,
-    "sero_keywords": String,
+    "seo_keywords": String,
     "seo_description": String,
     "seo_url": String,
     "status": {
