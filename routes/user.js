@@ -28,8 +28,56 @@ var v1 = {
                 next(err);
             });
         },
-        POST: function(req, res) {
-            res.send("request is template v1 from POST");
+        POST: function(req, res, next) {
+            try{
+                var query = base.getQuery(req);
+                var _temp = "";
+                _temp = !query.name ? "name参数是必须" :
+                    !query.pass ? "pass参数是必须" :
+                    !query.email ? "email参数是必须" : "";
+                if (!!_temp) {
+                    return next(base.err({
+                        "code": 20100,
+                        "from": "user.post.valid.fields",
+                        "message": _temp
+                    }));
+                }
+                _temp = {
+                    "name": query.name,
+                    "showname": query.showname || query.name,
+                    "pass": crypto.createHash('md5').update( query.pass ).digest('base64'),
+                    "email": query.email
+                };
+
+                Model.Msl.use(function(dbthen){
+                    var p = Model.User.findOne({
+                        "name": query.name
+                    }).select("_id").exec();
+                    p.then(function(doc){
+                        if( !!doc ){
+                            dbthen(base.err({
+                                "code": 20205,
+                                "from": "user.post.find.exists",
+                                "message": "用户名: " + query.name + "已存在"
+                            }));
+                        } else {
+                            return new Model.User(_temp).save();
+                        }
+                    }).then(function(doc){
+                        doc && res.send(base.format(doc));
+                    }).then(null, function(err){
+                        dbthen(base.err({
+                            "code": 20200,
+                            "from": "user.post.find|save",
+                            "message": err+""
+                        }));
+                    });
+                }, function(err){
+                    next(err);
+                });
+            } catch(err){
+                console.log(err);
+            }
         },
         PUT: function(req, res) {
             res.send("request is template v1 from PUT");
@@ -61,7 +109,6 @@ var v1 = {
 
                 p.then(function(doc) {
                     if( doc ){
-                        console.log(req.session);
                         req.session.user = doc;
                         req.session.cookie = {
                             expires: new Date().getTime() + req.EXPIRES

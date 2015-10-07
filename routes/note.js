@@ -14,6 +14,13 @@ var v1 = {
                     //.select("title intro author content createtime updatetime seo_url")
                     .skip( (page-1)*limit )
                     .limit(limit)
+                    .deepPopulate('user', {
+                        populate: {
+                            'user': {
+                                'select': 'name showname email'
+                            }
+                        }
+                    })
                     .sort({
                         updatetime: "desc"
                     }).exec(function(err, doc) {
@@ -136,6 +143,10 @@ var v1 = {
                             "message": "参数_id有误"
                         }));
                     }
+                    if( !doc.user.join(',').match(req.session.user._id) ){
+                        doc.user.push(req.session.user._id);
+                        doc.save();
+                    }
                     return Model.Note.findById(query._id).exec();
                 }).then(function(doc){
                     v1.Total();
@@ -156,6 +167,7 @@ var v1 = {
         },
         "item": {
             GET: function(req, res, next){
+
                 if( req.params.note_id.length !== 24 ){
                     return next(base.err({
                         "code": 20203,
@@ -166,6 +178,13 @@ var v1 = {
                 Model.Msl.use(function(dbthen) {
                     Model.Note
                         .findById(req.params.note_id)
+                        .deepPopulate('user', {
+                            populate: {
+                                'user': {
+                                    'select': 'name showname'
+                                }
+                            }
+                        })
                         //.select("title intro author content createtime updatetime seo_url")
                         .exec(function(err, doc) {
                             if (!!err || !doc) {
