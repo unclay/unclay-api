@@ -4,7 +4,11 @@ var Model = require("./model");
 
 var v1 = {
         GET: function(req, res) {
-            
+
+            res.send({
+                date: new Date(),
+                timestamp: new Date().getTime()
+            });
         },
         POST: function(req, res) {
         	
