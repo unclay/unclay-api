@@ -36,11 +36,11 @@ var PowerSchema = new Schema({
     "api": [String],
     "createtime": {
         "type": Number,
-        default: parseInt(new Date().getTime()*0.001,10)
+        default: moment().unix()
     },
     "updatetime": {
         "type": Number,
-        default: parseInt(new Date().getTime()*0.001,10)
+        default: moment().unix()
     }
 });
 var Power = msl.db.model("Power", PowerSchema);
@@ -54,11 +54,11 @@ var RoleSchema = new Schema({
     }],
     "createtime": {
         "type": Number,
-        default: parseInt(new Date().getTime()*0.001,10)
+        default: moment().unix()
     },
     "updatetime": {
         "type": Number,
-        default: parseInt(new Date().getTime()*0.001,10)
+        default: moment().unix()
     }
 });
 var Role = msl.db.model("Role", RoleSchema);
@@ -80,11 +80,11 @@ var UserSchema = new Schema({
     },
     "createtime": {
         "type": Number,
-        default: parseInt(new Date().getTime()*0.001,10)
+        default: moment().unix()
     },
     "updatetime": {
         "type": Number,
-        default: parseInt(new Date().getTime()*0.001,10)
+        default: moment().unix()
     }
 });
 UserSchema.plugin(deepPopulate);
@@ -110,11 +110,11 @@ var DictSchema = new Schema({
     },
     "createtime": {
         "type": Number,
-        default: parseInt(new Date().getTime()*0.001,10)
+        default: moment().unix()
     },
     "updatetime": {
         "type": Number,
-        default: parseInt(new Date().getTime()*0.001,10)
+        default: moment().unix()
     }
 });
 DictSchema.plugin(deepPopulate);
@@ -157,11 +157,11 @@ var NoteSchema = new Schema({
     },
     "createtime": {
         "type": Number,
-        default: parseInt(new Date().getTime()*0.001,10)
+        default: moment().unix()
     },
     "updatetime": {
         "type": Number,
-        default: parseInt(new Date().getTime()*0.001,10)
+        default: moment().unix()
     }
 });
 NoteSchema.plugin(deepPopulate);
@@ -201,7 +201,7 @@ var CommentSchema = new Schema({
     },
     "createtime": {
         "type": Number,
-        default: parseInt(new Date().getTime()*0.001,10)
+        default: moment().unix()
     }
 });
 var Comment = msl.db.model("Comment", CommentSchema);

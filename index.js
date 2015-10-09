@@ -13,6 +13,8 @@ var config = require("./config/config.json");
 var routes = require("./routes");
 var routes_session = require("./routes/session");
 
+
+
 // var client = redis.createClient(config.redis.port, config.redis.host, {"no_ready_check":true});
 // client.on("error", function (err) {
 //  	console.log("Error " + err);

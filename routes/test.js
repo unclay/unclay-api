@@ -2,6 +2,7 @@
 var base = require("./base");
 var Model = require("./model");
 var os = require("os");
+var moment = require("moment");
 
 var v1 = {
         GET: function(req, res) {
@@ -12,7 +13,8 @@ var v1 = {
                 timezoneOffset: new Date().getTimezoneOffset(),
                 os: os.uptime(),
                 utc: Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), 0 ),
-                utctime: new Date( Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), 0 ) )
+                utctime: new Date( Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), 0 ) ),
+                unix: moment().unix()
             });
         },
         POST: function(req, res) {
