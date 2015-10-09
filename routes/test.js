@@ -1,13 +1,18 @@
 "use strict";
 var base = require("./base");
 var Model = require("./model");
+var os = require("os");
 
 var v1 = {
         GET: function(req, res) {
-
+            var d = new Date();
             res.send({
                 date: new Date(),
-                timestamp: new Date().getTime()
+                timestamp: new Date().getTime(),
+                timezoneOffset: new Date().getTimezoneOffset(),
+                os: os.uptime(),
+                utc: Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), 0 ),
+                utctime: new Date( Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), 0 ) )
             });
         },
         POST: function(req, res) {
