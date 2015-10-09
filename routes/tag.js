@@ -1,6 +1,7 @@
 "use strict";
 var base = require("./base");
 var Model = require("./model");
+var moment = require("moment");
 
 var v1 = {
         GET: function(req, res, next) {
@@ -126,7 +127,7 @@ var v1 = {
                     "message": "没有需要修改的field"
                 }));
             }
-            _temp.updatetime = Date.now();
+            _temp.updatetime = moment().unix();
             Model.Msl.use(function(dbthen) {
                 var p = Model.Dict.findOne({
                     "type": "tag",
