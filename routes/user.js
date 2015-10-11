@@ -162,6 +162,18 @@ var v1 = {
             } else {
                 next();
             }
+        },
+        member: function(req, res, next){
+            console.log( req.session );
+            if( !!req.session.user ){
+                res.send(base.format(req.session.user));
+            } else {
+                res.send(base.err({
+                    "code": 20000,
+                    "from": "user.member.req.session.user",
+                    "message": "用户未登录"
+                }));
+            }
         }
     }
     // exportsFn.prototype.GET    = v2.GET;

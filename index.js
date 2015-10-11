@@ -59,7 +59,9 @@ app.use(cookieParser());
 
 
 
-app.use(new routes_session());
+app.use(new routes_session({
+	debug: false
+}));
 app.use(jTemplate({
 	cache: false,
 	domain: config.domain
