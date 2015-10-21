@@ -33,7 +33,7 @@ Uploads.prototype.start = function(req, fn1, fn2){
 	_this.form.parse(req, function(err, fields, files) {
 	    err = !!err ? err : 
 	    		(JSON.stringify(fields) === "{}" || !fields.place) ? "参数place不能为空" :
-	    		fields.place !== "thumbnail" ? "参数place不正确" :
+	    		(fields.place !== "thumbnail" && fields.place !== "note") ? "参数place不正确" :
 	    		(JSON.stringify(files) === "{}" || !files.file || !files.file.type) ? "参数file不能为空": "";
 	    if(err){
 	    	return fn2 ? fn2(err) : console.error(err);
@@ -49,10 +49,12 @@ Uploads.prototype.start = function(req, fn1, fn2){
 	    		if( !!doc ){
 	    			fs.unlinkSync(path.join(files.file.path+"") );
 	    			return fn2 ? fn2("文件已存在，不能再次上传") : console.error("文件已存在，不能再次上传");
-	    		} else {
-	    			if( fields.place === 'thumbnail' ){
+	    		} else if( fields.place === 'thumbnail' ){
 			    	_this.form.uploadDir = path.join(process.cwd(), "static/img/thumbnail");
+			    } else if( fields.place === 'note' ){
+			    	_this.form.uploadDir = path.join(process.cwd(), "static/img/note");
 			    }
+			    console.log( _this.form.uploadDir );
 		    	switch (files.file.type) {
 			    	case 'image/pjpeg':
 						_this.extName = 'jpg';
@@ -91,7 +93,7 @@ Uploads.prototype.start = function(req, fn1, fn2){
 			    }
 			    
 		  		
-	    		}
+	    		
 	    		return new Model.File({
 		    		"file_name": avatarName,
 		    		"type": files.file.type,
