@@ -134,7 +134,7 @@ var v1 = {
                         var host = req.headers.origin.split(".");
                         host = "."+host[host.length-2]+"."+host[host.length-1];
                         res.setHeader('Set-Cookie', req.KEY+'='+doc._id+';domain='+host+';path=/;Expires='+new Date(doc.value.cookie.expires).toGMTString()+';httpOnly=true');
-\                        res.send(base.format(doc.value.user));
+                        res.send(base.format(doc.value.user));
                     } else {
                         res.send(base.format("登陆失败"));
                     }
