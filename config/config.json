@@ -1,0 +1,14 @@
+{
+	"domain": {
+		"SOURCE": "http://source.unclay.com",
+		"NOTE": "http://note.unclay.com",
+		"API": "http://api.unclay.com"
+	},
+	"db": {
+	    "host": "mongo.duapp.com",
+	    "database": "rUJPFTguPXKJLMCCexyy",
+	    "user": "677346266c905ea767c02679b7cdf5d3",
+	    "pass": "2d2c3e4c5a1f18d0d0fd889e9f3d4744",
+	    "port": "8908"
+	}
+}
