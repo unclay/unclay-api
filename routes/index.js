@@ -9,6 +9,7 @@ var R_comment = require("./comment");
 var R_error = require("./error");
 var R_file = require("./file");
 var R_base = require("./base");
+var R_backup = require("./backup");
 // var R_redis = require("./redis");
 module.exports = function(app) {
     app.all("/api/v1/*", function(req, res, next){
@@ -24,6 +25,9 @@ module.exports = function(app) {
     app.get("/api/v1/test2", R_test.v1.GETSESSION);
     app.get("/api/v1/test", R_test.v1.GET);
     app.post("/api/v1/test", R_test.v1.POST);
+
+    app.get("/api/v1/backup", R_backup.v1.ALL);
+    app.get("/api/v1/recover", R_backup.v1.recover);
 
     app.route("/api/v1/power")
       .get(R_power.v1.GET);

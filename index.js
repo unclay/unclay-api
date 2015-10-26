@@ -31,7 +31,7 @@ var routes_session = require("./routes/session");
 // 建立连接后，在进行集合操作前，需要先进行auth验证
 
 //client.auth(config.redis.pass);
-var port = os.cpus()[0].model.indexOf("i5-4690") >= 0 ? 8085 : (os.type().indexOf("Window")>=0||os.cpus()[0].model.indexOf("M 380") >= 0) ? 8012 : 18080;
+var port = !!config.host && !!config.host.port ? config.host.port : 18080;
 
 var app = express();
 
@@ -88,6 +88,7 @@ app.get("/api/v1/test3", function(req, res, next){
 	// }
 });
 
+app.use("/backup", express.static(__dirname+"/static/backup"));
 app.use("/thumbnail", express.static(__dirname+"/static/img/thumbnail"));
 app.use("/t_thumbnail", express.static(__dirname+"/static/img/t_thumbnail"));
 

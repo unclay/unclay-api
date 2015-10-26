@@ -106,7 +106,6 @@ var v1 = {
                     .findOne(_temp)
                     .select("email name showname role power")
                     .exec();
-
                 p.then(function(doc) {
                     if( doc ){
                         req.session.user = doc;
@@ -132,10 +131,10 @@ var v1 = {
                     }
                 }).then(function(doc){
                     if( !!doc ){
-                        var host = req.headers.host.split(".");
+                        var host = req.headers.origin.split(".");
                         host = "."+host[host.length-2]+"."+host[host.length-1];
                         res.setHeader('Set-Cookie', req.KEY+'='+doc._id+';domain='+host+';path=/;Expires='+new Date(doc.value.cookie.expires).toGMTString()+';httpOnly=true');
-                        res.send(base.format(doc.value.user));
+\                        res.send(base.format(doc.value.user));
                     } else {
                         res.send(base.format("登陆失败"));
                     }
