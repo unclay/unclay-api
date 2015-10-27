@@ -236,7 +236,7 @@ v1.ALL = function(req, res){
 		data.length++;
 		data.note = doc;
 		for( var i=0; i<doc.length; i++ ){
-			!!doc[i].content && delete doc[i].content;
+			!!data.note[i].content && delete data.note[i].content;
 		}
 		v1.deal(req, res, data);
 	}, function(err){
