@@ -234,10 +234,11 @@ v1.ALL = function(req, res){
 	// 2
 	v1.Note(function(doc){
 		data.length++;
-		data.note = doc;
+		
 		for( var i=0; i<doc.length; i++ ){
-			!!data.note[i].content && delete data.note[i].content;
+			!!doc[i].content && delete doc[i].content;
 		}
+        data.note = doc;
 		v1.deal(req, res, data);
 	}, function(err){
 		data.elength++;
