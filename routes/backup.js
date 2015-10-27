@@ -143,8 +143,17 @@ var v1 = {
     recover: function(req, res, next){
     	var query = base.getQuery(req);
     	var time = query.time || "";
+    	function strToJson(str){ 
+            var json = eval('(' + str + ')'); 
+            return json; 
+        } 
     	var data = fs.readFileSync(__dirname + "/../static/backup/"+ time +".json", "utf-8");
-    	data = JSON.parse(data);
+    	try{
+    		//data = strToJson( data );
+    		data = JSON.parse(data);
+    	} catch(err){
+    		console.log(err);
+    	}	
     	!!data.length && delete data.length;
     	!!data.elength && delete data.elength;
     	Model.Msl.use(function(dbthen) {
@@ -226,6 +235,9 @@ v1.ALL = function(req, res){
 	v1.Note(function(doc){
 		data.length++;
 		data.note = doc;
+		for( var i=0; i<doc.length; i++ ){
+			!!doc[i].content && delete doc[i].content;
+		}
 		v1.deal(req, res, data);
 	}, function(err){
 		data.elength++;
